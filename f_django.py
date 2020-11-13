@@ -28,7 +28,7 @@ def checkHTMLhref():
     hrefValStart = tempData[tempData.index(forLINKstart) + 6:]
     hrefVal = hrefValStart[:hrefValStart.index('"')]
     
-    if ('https' in hrefVal or 'mailto' in hrefVal):
+    if ('https' in hrefVal or 'mailto' in hrefVal or '{% static' in hrefVal):
         cssLink = hrefVal
     else:
         cssLink = "{% static '" + hrefVal + "' %}"
@@ -54,7 +54,7 @@ def checkHTMLsrc():
     srcStart = tempData2[tempData2.index(forSRCstart) + 5:]
     srcVal = srcStart[:srcStart.index('"')]
     
-    if 'https' in srcVal:
+    if 'https' in srcVal or '{% static' in srcVal:
         src = srcVal
     else:
         src = "{% static '" + srcVal + "' %}"

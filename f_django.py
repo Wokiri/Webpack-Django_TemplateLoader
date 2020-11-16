@@ -8,16 +8,23 @@ forLINKstart = 'href="'
 forSRCstart = 'src="'
 
 data = ''
+# Call for user values
+userHTMLValue = input("Name of the HTML document (include '.html'): \n")
 
-indexFile = os.path.join(os.getcwd(), 'prod', 'index.html')
+htmlFile = os.path.join(os.getcwd(), 'prod', userHTMLValue)
 
-if os.path.isfile(indexFile):
-    oldIndex = open(indexFile, 'rt') #read the index file
-    data = oldIndex.read() #read index contents to string
-    oldIndex.close()
+if os.path.isfile(htmlFile):
+    print(f'{htmlFile} file found')
+    oldhtmlFile = open(htmlFile, 'rt') #read the index file
+    data = oldhtmlFile.read() #read index contents to string
+    oldhtmlFile.close()
+else:
+    print(f'{htmlFile} file NOT found')
+    quit()
     
 # Adds djangoStatic load
-data = data.replace(headTag, headTag + djangoStatic)
+if data.find(djangoStatic) == -1:
+    data = data.replace(headTag, headTag + djangoStatic)
 
 tempData = data
 
@@ -71,13 +78,13 @@ def checkHTMLsrc():
 
 
 # Open index.html again to write data
-HTMLFile = open(indexFile, 'wt')
+newHTMLFile = open(htmlFile, 'wt')
 # Overide it with the formatted data
-HTMLFile.write(checkHTMLsrc())
+newHTMLFile.write(checkHTMLsrc())
 # close file
-HTMLFile.close()
+newHTMLFile.close()
 # print(checkHTMLsrc())
 
-newIndexFile = os.path.join(os.getcwd(), 'prod', 'index.html')
-if os.path.isfile(newIndexFile):
-    print('Index HTML File updated successfully!')
+
+if os.path.isfile(htmlFile):
+    print('HTML File updated successfully!')
